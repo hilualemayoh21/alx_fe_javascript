@@ -105,4 +105,48 @@ function getLastViewedQuote() {
         }
 
         window.onload = populateCategories;
-    
+    // Step 1: Simulate Server Interaction
+const API_URL = 'https://jsonplaceholder.typicode.com/posts';
+let localQuotes = [];
+
+// Function to fetch quotes from the server
+async function fetchQuotes() {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    return data.slice(0, 5); // Simulating fetching 5 quotes
+}
+
+// Periodic fetching of quotes
+setInterval(async () => {
+    const serverQuotes = await fetchQuotes();
+    syncQuotes(serverQuotes);
+}, 10000); // Fetch every 10 seconds
+
+// Step 2: Implement Data Syncing
+function syncQuotes(serverQuotes) {
+    serverQuotes.forEach(serverQuote => {
+        const localQuote = localQuotes.find(q => q.id === serverQuote.id);
+        if (!localQuote) {
+            localQuotes.push(serverQuote); // Add new quote
+        } else if (localQuote.title !== serverQuote.title) {
+            // Conflict resolution: server data takes precedence
+            Object.assign(localQuote, serverQuote);
+            notifyUser(`Quote updated: ${localQuote.title}`);
+        }
+    });
+    saveToLocalStorage();
+}
+
+// Save quotes to local storage
+function saveToLocalStorage() {
+    localStorage.setItem('quotes', JSON.stringify(localQuotes));
+}
+
+// Step 3: Handling Conflicts
+function notifyUser(message) {
+    const notification = document.createElement('div');
+    notification.innerText = message;
+    notification.className = 'notification';
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
