@@ -22,3 +22,58 @@ function addQuote() {
         document.getElementById('newQuoteCategory').value = '';
     }
 }
+let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
+
+function addQuote(quote) {
+    quotes.push(quote);
+    saveQuotes();
+}
+
+function saveQuotes() {
+    localStorage.setItem('quotes', JSON.stringify(quotes));
+}
+
+function loadQuotes() {
+    quotes.forEach(quote => {
+        displayQuote(quote);
+    });
+}
+
+function displayQuote(quote) {
+    // Code to display the quote on the webpage
+}
+
+document.addEventListener('DOMContentLoaded', loadQuotes);
+
+document.getElementById('exportButton').addEventListener('click', function() {
+    const blob = new Blob([JSON.stringify(quotes)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'quotes.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
+
+document.getElementById('importFile').addEventListener('change', importFromJsonFile);
+
+function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+        const importedQuotes = JSON.parse(event.target.result);
+        quotes.push(...importedQuotes);
+        saveQuotes();
+        alert('Quotes imported successfully!');
+    };
+    fileReader.readAsText(event.target.files[0]);
+}
+
+// Optional: Using session storage for user preferences
+function setLastViewedQuote(index) {
+    sessionStorage.setItem('lastViewedQuote', index);
+}
+
+function getLastViewedQuote() {
+    return sessionStorage.getItem('lastViewedQuote');
+}
