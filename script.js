@@ -77,3 +77,32 @@ function setLastViewedQuote(index) {
 function getLastViewedQuote() {
     return sessionStorage.getItem('lastViewedQuote');
 }
+ function populateCategories() {
+            const categories = [...new Set(quotes.map(quote => quote.category))];
+            const categoryFilter = document.getElementById('categoryFilter');
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                categoryFilter.appendChild(option);
+            });
+            const lastSelectedCategory = localStorage.getItem('lastSelectedCategory') || 'all';
+            categoryFilter.value = lastSelectedCategory;
+            filterQuotes();
+        }
+
+        function filterQuotes() {
+            const selectedCategory = document.getElementById('categoryFilter').value;
+            const filteredQuotes = selectedCategory === 'all' ? quotes : quotes.filter(quote => quote.category === selectedCategory);
+            const quoteDisplay = document.getElementById('quoteDisplay');
+            quoteDisplay.innerHTML = filteredQuotes.map(quote => `<p>${quote.text}</p>`).join('');
+            localStorage.setItem('lastSelectedCategory', selectedCategory);
+        }
+
+        function addQuote(text, category) {
+            quotes.push({ text, category });
+            populateCategories();
+        }
+
+        window.onload = populateCategories;
+    
