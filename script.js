@@ -22,7 +22,7 @@ function addQuote() {
         document.getElementById('newQuoteCategory').value = '';
     }
 }
-let quotes = JSON.parse(localStorage.getItem('quotes')) || [];
+ quotes = JSON.parse(localStorage.getItem('quotes')) || [];
 
 function addQuote(quote) {
     quotes.push(quote);
