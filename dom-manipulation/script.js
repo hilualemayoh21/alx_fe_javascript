@@ -11,17 +11,19 @@ function showRandomQuote() {
   const quoteDisplay = document.querySelector('.quoteDisplay');
 
   // Check if quoteDisplay exists in the DOM.
+  
   if (quoteDisplay) {
     const randomQuote = quotes[randomIndex];
-    
-      quoteDisplay.innerHTML += `<p>"${randomQuote.text}"<br/><em>- ${randomQuote.category}</em></p>`;
+    quoteDisplay.innerHTML = `<p>"${randomQuote.text}"<br/><em>- ${randomQuote.category}</em></p>`;
   } else {
     console.error('Error: quoteDisplay element not found.');
   }
 }
 
+
+
 // Event listener to show a new quote on button click.
-document.getElementById('newQueto').addEventListener('click', showRandomQuote);
+document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 
 // Function to add a new quote to the array
 function createAddQuoteForm() {
@@ -29,7 +31,23 @@ function createAddQuoteForm() {
   const quoteCategory = document.getElementById('newQuoteCategory').value.trim();
 
   if (quoteText && quoteCategory) {
-    quotes.push({ text: quoteText, category: quoteCategory });
+       // Add new quote to the array
+    const newQuote = { text: quoteText, category: quoteCategory };
+    quotes.push(newQuote);
+
+     const quoteItem = document.createElement('li'); // Create list item
+    const quoteTextElem = document.createElement('p'); // Create paragraph for quote text
+    const quoteCategoryElem = document.createElement('em'); // Create emphasis for category
+
+    // Set the text content for the new elements
+    quoteTextElem.textContent = `"${newQuote.text}"`;
+    quoteCategoryElem.textContent = `- ${newQuote.category}`;
+
+    // Append category to the quote text and then the text to the list item
+    quoteTextElem.appendChild(quoteCategoryElem);
+    quoteItem.appendChild(quoteTextElem);
+    // Append the list item to the quote list
+    quoteList.appendChild(quoteItem);
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
     alert("Quote added successfully!");
