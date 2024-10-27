@@ -144,10 +144,8 @@ function exportQuotes() {
 }
 
 // Button to trigger export
-const exportButton = document.createElement("button");
-exportButton.textContent = "Export Quotes";
+const exportButton = document.getElementById("iexportQuotesButton");
 exportButton.addEventListener("click", exportQuotes);
-document.body.appendChild(exportButton);
 
 // Function to import quotes from a JSON file
 function importFromJsonFile(event) {
