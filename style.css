@@ -1,0 +1,38 @@
+body{
+    background-color: rgb(155, 104, 204);
+    color: azure;
+}
+h1{
+    text-align: center;
+    color: azure;
+}
+ .style{
+      padding: 0 3rem;
+      height:2rem;
+ }
+ .form{
+    transform: translateY(18rem);
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    gap:5rem;
+ }
+.btnAdd{
+    color:azure;
+    width: 7rem;
+    border-radius: 1.2rem;
+    border:none;
+    padding:0.5rem;
+    margin-top: 0.5rem;
+    background-color: #f518ed;;
+}
+      .btnShow{
+        transform: translate(35rem ,1rem);
+        font-size: 1rem;
+        padding:0.6rem;
+        border-radius: 1rem;
+        background-color: #f518ed;
+        border: none;
+        color:azure;
+
+      }
