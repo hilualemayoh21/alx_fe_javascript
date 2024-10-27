@@ -13,7 +13,11 @@ function showRandomQuote() {
   // Check if quoteDisplay exists in the DOM.
   if (quoteDisplay) {
     const randomQuote = quotes[randomIndex];
-    quoteDisplay.innerHTML += `<p>"${randomQuote.text}"<br/><em>- ${randomQuote.category}</em></p>`;
+    let p=document.createElement('p');
+    let span=document.createElement('span');
+   quoteDisplay.appendChild(p);
+   quoteDisplay.appendChild(span);
+   
   } else {
     console.error('Error: quoteDisplay element not found.');
   }
